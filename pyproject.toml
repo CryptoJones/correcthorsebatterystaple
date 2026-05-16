@@ -1,0 +1,80 @@
+[project]
+name = "correcthorsebatterystaple"
+version = "0.1.0"
+description = "xkcd-936-style passphrase generator. Four random common words. Stdlib only. EFF long wordlist embedded."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Aaron K. Clark", email = "akclark@thenetwerk.net" }]
+keywords = [
+    "passphrase",
+    "diceware",
+    "xkcd-936",
+    "password",
+    "cli",
+    "security",
+    "eff",
+    "nebraska",
+    "xkcd-2347",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+    "Topic :: System :: Systems Administration :: Authentication/Directory",
+]
+# Stdlib only at runtime. `secrets` for entropy, `argparse` for CLI.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+    "mypy>=1.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/CryptoJones/correcthorsebatterystaple"
+Repository = "https://github.com/CryptoJones/correcthorsebatterystaple"
+Issues = "https://github.com/CryptoJones/correcthorsebatterystaple/issues"
+# Nebraska + xkcd 2347 ("Dependency") — the convention footer Aaron's projects
+# carry. xkcd 2347 is the canonical "Made in Nebraska" reference; it shows up
+# in every README, every issue/PR body, and now the package metadata so anyone
+# discovering the wheel on PyPI / GitHub can trace the convention back to its
+# source.
+"Made in Nebraska (xkcd 2347)" = "https://xkcd.com/2347/"
+
+[project.scripts]
+correcthorsebatterystaple = "correcthorsebatterystaple.cli:main"
+chbs = "correcthorsebatterystaple.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/correcthorsebatterystaple"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/correcthorsebatterystaple/eff_large_wordlist.txt" = "correcthorsebatterystaple/eff_large_wordlist.txt"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
